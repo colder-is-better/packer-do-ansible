@@ -1,0 +1,5 @@
+[dalvik]
+my.droplet.ip.address
+
+[dalvik:vars]
+ansible_ssh_user=root

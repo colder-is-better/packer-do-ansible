@@ -1,0 +1,33 @@
+{
+  "variables": {
+    "my_do_token": "PUT_YOUR_DO_API_TOKEN_HERE",
+    "vm_name": "dalvik",
+    "image_slug": "ubuntu-18-04-x64",
+    "region_slug": "fra1",
+    "size_slug": "512mb"
+  },
+
+  "builders": [
+    {
+      "type": "digitalocean",
+      "snapshot_name": "{{ user `vm_name`}}-by-packer-{{timestamp}}",
+      "droplet_name": "{{ user `vm_name` }}",
+      "ssh_username": "root",
+      "api_token": "{{ user `my_do_token` }}",
+      "image": "{{ user `image_slug` }}",
+      "region": "{{ user `region_slug` }}",
+      "size": "{{ user `size_slug` }}"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": ["ln -s /usr/bin/python3 /usr/bin/python"]
+    },
+    {
+      "type": "ansible",
+      "playbook_file": "./provision.yml"
+    }
+  ]
+}

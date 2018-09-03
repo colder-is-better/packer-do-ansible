@@ -1,0 +1,79 @@
+---
+- hosts: all
+
+  tasks:
+
+    - name: Upload locale definitions
+      copy:
+        src: "./config/ubuntu-locale.conf"
+        dest: "/etc/default/locale"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Update repository cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Make sure aptitude is installed
+      apt:
+        name: aptitude
+        state: present
+
+    - name: Apply package updates
+      apt:
+        name: '*'
+        state: latest
+        install_recommends: yes
+
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Upload nginx configuration
+      copy:
+        src: "./config/ubuntu-nginx.conf"
+        dest: "/etc/nginx/nginx.conf"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Create new directory for domain configuration
+      file:
+        path: "/etc/nginx/vhost.d"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Upload server block configuration
+      copy:
+        src: "./config/my_domain.conf"
+        dest: "/etc/nginx/vhost.d/my_domain.conf"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Create new directory to serve content from
+      file:
+        path: "/var/www/html/my_domain"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Upload forsíða :P
+      copy:
+        src: "./config/my_domain.start.html"
+        dest: "/var/www/html/my_domain/index.html"
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: Start nginx service & make sure it gets activated on boot
+      service:
+        name: nginx
+        state: started
+        enabled: yes
