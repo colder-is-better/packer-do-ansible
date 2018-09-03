@@ -1,7 +1,7 @@
 {
   "variables": {
     "my_do_token": "PUT_YOUR_DO_API_TOKEN_HERE",
-    "vm_name": "dalvik",
+    "vm_name": "delta",
     "image_slug": "ubuntu-18-04-x64",
     "region_slug": "fra1",
     "size_slug": "512mb"
