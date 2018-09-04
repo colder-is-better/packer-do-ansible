@@ -1,4 +1,4 @@
-# An example of using Packer with the DigitalOcean builder
+# An example of using DigitalOcean Packer builder & Ansible provisioner
 
 The snapshot image we create has Ubuntu Server 18.04 LTS and nginx preconfigured to serve a custom domain. For the provisioning of the image we use Ansible. Before we run the Packer builder for the first time we need to edit `template.json` and replace `PUT_YOUR_DO_API_TOKEN_HERE` with our [DigitalOcean API token](https://www.digitalocean.com/docs/api).
 
